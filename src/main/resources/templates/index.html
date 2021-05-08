@@ -2,17 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
 <div>
-    <h4>점수 봅시다~</h4>
-    <button id="increaseScore">+</button>
-    <button id="decreaseScore">-</button>
-    <div id="score"></div>
+    <h4>A팀 vs B팀</h4>
+    <button id="aTeamIncreased">A</button>
+    <button id="bTeamIncreased">B</button>
+
+    <span id="aTeamScore"></span>
+    <span id="bTeamScore"></span>
 </div>
 
+<button id="resultBtn">결과보기</button>
+<div id="matchResult"></div>
 </body>
 </html>
 
