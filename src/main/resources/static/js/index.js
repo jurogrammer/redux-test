@@ -1,66 +1,55 @@
-const {createStore} = Redux;
+const {createStore, combineReducers} = Redux;
 
-//// 상태 정의 ////
-let rootState = {
-    score: {
-        aTeamScore: 0,
-        bTeamScore: 0,
-    },
 
-    matchResult: {
-        result: '-' //가능한 상태: a, draw, b, -
-    }
+// 상태 정의
+let scoreState = {
+    aTeamScore: 0,
+    bTeamScore: 0,
+}
+
+let matchResultState = {
+    result: '-' //가능한 상태: a, draw, b, -
 }
 
 //// 상태 변경하는 reducer 정의 ////
-function rootReducer(state = rootState, action) {
+function score(state = scoreState, action) {
     switch (action.type) {
         case 'score/aTeamIncreased':
             return {
                 ...state,
-                score: {
-                    ...state.score,
-                    aTeamScore: state.score.aTeamScore + 1,
-                }
+                aTeamScore: state.aTeamScore + 1,
             };
         case 'score/bTeamIncreased':
             return {
                 ...state,
-                score: {
-                    ...state.score,
-                    bTeamScore: state.score.bTeamScore + 1
-                }
-            }
-        case 'matchResult/result':
-            let aTeamScore = state.score.aTeamScore;
-            let bTeamScore = state.score.bTeamScore;
+                bTeamScore: state.bTeamScore + 1
+            };
+        default:
+            return state;
+    }
+}
 
-            if (aTeamScore > bTeamScore) {
-                return {
-                    ...state,
-                    matchResult: {
-                        result: 'a'
-                    }
-                }
-            } else if (aTeamScore < bTeamScore) {
-                return {
-                    ...state,
-                    matchResult: {
-                        result: 'b'
-                    }
-                }
-            } else {
-                return {
-                    ...state,
-                    matchResult: {
-                        result: 'draw'
-                    }
-                }
+function matchResult(state = matchResultState, action) {
+    switch (action.type) {
+        case 'a':
+            return {
+                result: 'a'
+            }
+        case 'b':
+            return {
+                result: 'b'
+            }
+        case 'draw':
+            return {
+                result: 'draw'
             }
         default:
             return state;
     }
 }
+
+let rootReducer = combineReducers({score, matchResult});
+
 
 let store = createStore(rootReducer);
 
@@ -81,27 +70,34 @@ bTeamIncreaseBtn.addEventListener('click', (e) => {
     store.dispatch({type: 'score/bTeamIncreased'})
 })
 
+
+// 상태 A로 바꿔주세요, B로 바꿔주세요. 얘가 판단하는게 맞니?
 resultBtn.addEventListener('click', (e) => {
-    store.dispatch({type: 'matchResult/result'})
+    let score = store.getState().score;
+    if (score.aTeamScore > score.bTeamScore) {
+        store.dispatch({type: 'a'})
+    } else if (score.aTeamScore < score.bTeamScore) {
+        store.dispatch({type: 'b'})
+    } else
+        store.dispatch({type: 'draw'})
 })
 
 // 상태를 표현 담당하는 element
-let aTeamScore = document.getElementById('aTeamScore');
-let bTeamScore = document.getElementById('bTeamScore');
-let matchResult = document.getElementById('matchResult');
+let aTeamScoreTag = document.getElementById('aTeamScore');
+let bTeamScoreTag = document.getElementById('bTeamScore');
+let matchResultTag = document.getElementById('matchResult');
 
 
 function renderAScore() {
-    aTeamScore.innerText = store.getState().score.aTeamScore;
+    aTeamScoreTag.innerText = store.getState().score.aTeamScore;
 }
 
 function renderBScore() {
-    bTeamScore.innerText = store.getState().score.bTeamScore;
+    bTeamScoreTag.innerText = store.getState().score.bTeamScore;
 }
 
 function renderResult() {
-    matchResult.innerText = store.getState().matchResult.result;
-
+    matchResultTag.innerText = store.getState().matchResult.result;
 }
 
 // rendering init
