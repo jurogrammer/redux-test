@@ -8,7 +8,7 @@ let rootState = {
     },
 
     matchResult: {
-        result: 'draw' //가능한 상태: a, 'draw', b
+        result: '-' //가능한 상태: a, draw, b, -
     }
 }
 
