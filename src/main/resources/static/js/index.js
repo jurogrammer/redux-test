@@ -1,3 +1,6 @@
+import {matchResult, createMatchAction} from './features/referee.js'
+import {score, createScoreAction} from './features/counter.js'
+
 const {createStore, combineReducers} = Redux;
 
 
@@ -55,6 +58,7 @@ let matchResultTag = document.getElementById('matchResult');
 let AppRender = {
     init: function () {
         this.initRender();
+
         store.subscribe(() => {
             this.renderAScore();
             this.renderBScore();
@@ -76,7 +80,7 @@ let AppRender = {
 
     },
 
-    initRender: function() {
+    initRender: function () {
         this.renderAScore();
         this.renderBScore();
         this.renderResult();

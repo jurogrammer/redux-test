@@ -3,7 +3,7 @@ const scoreState = {
     bTeamScore: 0,
 }
 
-function score(state = scoreState, action) {
+export function score(state = scoreState, action) {
     switch (action.type) {
         case 'score/aTeamIncreased':
             return {
@@ -20,7 +20,7 @@ function score(state = scoreState, action) {
     }
 }
 
-function createScoreAction(type) {
+export function createScoreAction(type) {
     switch (type) {
         case 'a':
             return {type: 'score/aTeamIncreased'}

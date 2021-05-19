@@ -2,7 +2,7 @@ const matchResultState = {
     result: '-' //가능한 상태: a, draw, b, -
 }
 
-function matchResult(state = matchResultState, action) {
+export function matchResult(state = matchResultState, action) {
     switch (action.type) {
         case 'a':
             return {
@@ -21,7 +21,7 @@ function matchResult(state = matchResultState, action) {
     }
 }
 
-function createMatchAction(type) {
+export function createMatchAction(type) {
     switch (type) {
         case 'a':
             return {type: 'a'};
